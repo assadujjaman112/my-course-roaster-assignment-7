@@ -9,7 +9,7 @@ const Cart = ({ selectedCourse, totalPrice,totalCredit,creditRemaining }) => {
       <hr className="w-4/5 mx-auto" />
       <h2 className="my-4 font-bold text-xl ">Course Name</h2>
       {selectedCourse.map((course) => (
-        <li key={course.id}>{course.name}</li>
+        <li className='list-decimal' key={course.id}>{course.name}</li>
       ))}
       <hr className="w-4/5 mx-auto mt-5" />
       <h3 className="my-4 text-medium ">Total Credit Hour :{totalCredit} </h3>
