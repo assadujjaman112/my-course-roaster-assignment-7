@@ -11,7 +11,6 @@ const Home = () => {
   const [totalCredit, setTotalCredit] = useState(0);
   const [creditRemaining, setCreditRemaining] = useState(0);
 
-
   useEffect(() => {
     fetch("./data.json")
       .then((res) => res.json())
@@ -22,19 +21,23 @@ const Home = () => {
     const isExist = selectedCourse.find((item) => item.id === course.id);
     let totalCost = course.price;
     let credit = course.credit;
+    let remainingCredit = 0;
     if (isExist) {
-      return toast.error("Course already purchased")
-    }
-    else{
-
-      selectedCourse.forEach(item => {
+      return toast.error("Course already purchased...");
+    } else {
+      selectedCourse.forEach((item) => {
         totalCost += item.price;
-        credit += item.credit
-      })
-      
-      setTotalPrice(totalCost);
-      setTotalCredit(credit)
-      setSelectedCourse([...selectedCourse, course]);
+        credit += item.credit;
+        remainingCredit = 20 - credit;
+      });
+      if (credit > 20) {
+        return toast.error("Credit limit reached!!!");
+      } else {
+        setTotalPrice(totalCost);
+        setTotalCredit(credit);
+        setCreditRemaining(remainingCredit);
+        setSelectedCourse([...selectedCourse, course]);
+      }
     }
   };
 
@@ -89,7 +92,12 @@ const Home = () => {
         ))}
       </div>
       <div className="w-1/4">
-        <Cart selectedCourse={selectedCourse} totalPrice = {totalPrice} totalCredit ={totalCredit} creditRemaining = {creditRemaining}></Cart>
+        <Cart
+          selectedCourse={selectedCourse}
+          totalPrice={totalPrice}
+          totalCredit={totalCredit}
+          creditRemaining={creditRemaining}
+        ></Cart>
         <ToastContainer></ToastContainer>
       </div>
     </div>
