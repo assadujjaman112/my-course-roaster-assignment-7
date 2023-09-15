@@ -9,7 +9,7 @@ const Home = () => {
   const [selectedCourse, setSelectedCourse] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalCredit, setTotalCredit] = useState(0);
-  const [creditRemaining, setCreditRemaining] = useState(0);
+  const [creditRemaining, setCreditRemaining] = useState(20);
 
   useEffect(() => {
     fetch("./data.json")
@@ -21,7 +21,7 @@ const Home = () => {
     const isExist = selectedCourse.find((item) => item.id === course.id);
     let totalCost = course.price;
     let credit = course.credit;
-    let remainingCredit = 0;
+    let remainingCredit = 20-credit;
     if (isExist) {
       return toast.error("Course already purchased...");
     } else {
@@ -29,8 +29,11 @@ const Home = () => {
         totalCost += item.price;
         credit += item.credit;
         remainingCredit = 20 - credit;
+        console.log(totalCost, credit, remainingCredit)
       });
-      if (credit > 20) {
+      
+      console.log(totalCost, credit, remainingCredit);
+      if (credit > 20 || remainingCredit < 0) {
         return toast.error("Credit limit reached!!!");
       } else {
         setTotalPrice(totalCost);
@@ -42,8 +45,8 @@ const Home = () => {
   };
 
   return (
-    <div className="flex w-11/12 mx-auto  gap-7">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  mb-5 gap-6 w-3/4">
+    <div className="flex flex-col md:flex-row w-11/12 mx-auto  gap-7">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  mb-5 gap-6 w-11/12 mx-auto  md:w-3/4">
         {courses.map((course) => (
           <div className="rounded-lg p-3 bg-[#FFF]" key={course.id}>
             <img className="w-full" src={course.img} alt="" />
