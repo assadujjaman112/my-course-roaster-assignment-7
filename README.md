@@ -9,7 +9,7 @@ Project Features :-
 
 
 
-*User can select a specific course. By clicking the Select button user can select their desire course.
+- User can select a specific course. By clicking the Select button user can select their desire course.
 
 *User can get total cost. whenever users select multiple  course they can get the total cost of all the courses they have selected.
 
